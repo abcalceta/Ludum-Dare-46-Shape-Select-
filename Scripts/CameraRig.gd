@@ -59,7 +59,7 @@ func moveCamera(delta):
 	velY = lerp(velY, 0, slowDown*delta)
 	$Outer.rotate_y(velY)
 	velX = lerp(velX, 0, slowDown*delta)
-	print($Outer/Inner.rotation_degrees.x)
+	#print($Outer/Inner.rotation_degrees.x)
 	if $Outer/Inner.rotation_degrees.x <= 90:
 		if $Outer/Inner.rotation_degrees.x <= -90:
 			velX = 0

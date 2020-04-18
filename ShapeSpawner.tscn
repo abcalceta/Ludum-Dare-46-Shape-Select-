@@ -4,3 +4,14 @@
 
 [node name="ShapeSpawner" type="Spatial"]
 script = ExtResource( 1 )
+
+[node name="rampUpSpeed" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="spawnTimer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 1.8
+autostart = true
+[connection signal="timeout" from="rampUpSpeed" to="." method="_on_rampUpSpeed_timeout"]
+[connection signal="timeout" from="spawnTimer" to="." method="_on_spawnTimer_timeout"]

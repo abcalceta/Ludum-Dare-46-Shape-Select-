@@ -1,13 +1,19 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Object.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Assets/Items/sphere.gltf" type="PackedScene" id=2]
+[ext_resource path="res://Assets/Items/Material.material" type="Material" id=3]
+[ext_resource path="res://Scripts/Sphere.gd" type="Script" id=4]
 
 [sub_resource type="SphereShape" id=1]
 
 [node name="Sphere" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
 
 [node name="sphere" parent="." index="0" instance=ExtResource( 2 )]
+
+[node name="Sphere" parent="sphere" index="0"]
+material/0 = ExtResource( 3 )
 
 [node name="CollisionShape" type="CollisionShape" parent="StaticBody" index="0"]
 shape = SubResource( 1 )

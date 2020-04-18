@@ -1,22 +1,33 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/kloppenheim_02_1k (1).hdr" type="Texture" id=1]
 [ext_resource path="res://CameraRig.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/World.gd" type="Script" id=3]
 [ext_resource path="res://ShapeSpawner.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Debug.tscn" type="PackedScene" id=5]
 
-[sub_resource type="PanoramaSky" id=3]
+[sub_resource type="PanoramaSky" id=1]
 panorama = ExtResource( 1 )
 
 [sub_resource type="Environment" id=2]
 background_mode = 2
-background_sky = SubResource( 3 )
+background_sky = SubResource( 1 )
 background_color = Color( 0.858824, 0.858824, 0.858824, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
-ambient_light_energy = 0.5
+ambient_light_energy = 0.8
+ambient_light_sky_contribution = 0.5
+dof_blur_far_enabled = true
+dof_blur_far_distance = 30.0
+dof_blur_far_transition = 10.0
+dof_blur_far_amount = 0.05
+dof_blur_far_quality = 2
 
 [node name="World" type="Spatial"]
 script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Debug" parent="CanvasLayer" instance=ExtResource( 5 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )

@@ -43,7 +43,7 @@ func getColorFromName(colorName):
 	var colorMax = ( (degrees+5) - (0) ) / (360.0 - (0))
 	
 	var colorRange = rand_range(colorMin, colorMax)
-	print(degrees, " ", colorMin, colorMax, colorRange)
+	#print(degrees, " ", colorMin, colorMax, colorRange)
 	var hue = colorRange
 	
 	
