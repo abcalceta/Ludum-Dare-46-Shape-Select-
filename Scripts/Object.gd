@@ -16,10 +16,10 @@ func _ready():
 	colorColor = globals.getColorFromName(colorName)
 	
 	#$StaticBody/CollisionShape/mesh.material.duplicate()
-	material = $StaticBody/CollisionShape/mesh.material.duplicate()
+	var mesh = get_child(0).get_child(0)
+	material = mesh.mesh.surface_get_material(0).duplicate()
 	material.set("albedo_color", Color(colorColor))
-	$StaticBody/CollisionShape/mesh.material = material
-	
+	mesh.set("material/0", material)
 	
 	pass # Replace with function body.
 

@@ -1,19 +1,42 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://Scripts/ObjectDesc.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Theme.tres" type="Theme" id=2]
 
 [node name="ObjectDesc" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -804.0
+margin_bottom = -535.0
+theme = ExtResource( 2 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="."]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "The Object Label Here"
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_left = -68.0
+margin_right = 71.0
+margin_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 11
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 132.0
+margin_bottom = 27.0
+size_flags_horizontal = 3
+size_flags_vertical = 7
+text = "test"
+align = 1
+valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

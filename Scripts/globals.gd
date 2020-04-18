@@ -57,7 +57,7 @@ func getColorFromName(colorName):
 	if colorName == "black":
 		brightness = 0.1
 	if colorName == "gray":
-		brightness = 0.5
+		brightness = rand_range(0.25,0.45)
 	if colorName == "white":
 		brightness = 0.9
 	

@@ -6,7 +6,11 @@
 [node name="CameraRig" type="Spatial"]
 script = ExtResource( 1 )
 
-[node name="Camera" type="Camera" parent="."]
+[node name="Outer" type="Spatial" parent="."]
+
+[node name="Inner" type="Spatial" parent="Outer"]
+
+[node name="Camera" type="Camera" parent="Outer/Inner"]
 
 [node name="MouseRayCast" type="RayCast" parent="."]
 enabled = true
