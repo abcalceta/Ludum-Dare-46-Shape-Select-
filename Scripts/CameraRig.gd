@@ -11,6 +11,7 @@ var mousePos = Vector2(0,0)
 #var mouseMotion = Vector3(0,0,0)
 #var mouseSpeed = 0.1
 var velY = 0
+var velX = 0
 const SPEED = 0.5
 
 # Called when the node enters the scene tree for the first time.
@@ -31,6 +32,11 @@ func _physics_process(delta):
 		velY += 1*SPEED*delta
 	if Input.is_action_pressed("right"):
 		velY -= 1*SPEED*delta
+	if Input.is_action_pressed("up"):
+		velX += 1*SPEED*delta
+	if Input.is_action_pressed("down"):
+		velX -= 1*SPEED*delta
+		
 	moveCamera(delta)
 	
 
@@ -51,7 +57,18 @@ func mouseRayCastCheck():
 func moveCamera(delta):
 	var slowDown = 10
 	velY = lerp(velY, 0, slowDown*delta)
-	$Outer/Inner.rotate_y(velY)
+	$Outer.rotate_y(velY)
+	velX = lerp(velX, 0, slowDown*delta)
+	print($Outer/Inner.rotation_degrees.x)
+	if $Outer/Inner.rotation_degrees.x <= 90:
+		if $Outer/Inner.rotation_degrees.x <= -90:
+			velX = 0
+			$Outer/Inner.rotation_degrees.x = -89
+		else:	
+			$Outer/Inner.rotate_x(velX)
+	else:
+		velX = 0
+		$Outer/Inner.rotation_degrees.x = 90
 
 
 func showObjectDesc(object):

@@ -1,18 +1,31 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://ItemScenes/Sphere.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/kloppenheim_02_1k (1).hdr" type="Texture" id=1]
 [ext_resource path="res://CameraRig.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scripts/World.gd" type="Script" id=3]
+[ext_resource path="res://ShapeSpawner.tscn" type="PackedScene" id=4]
+
+[sub_resource type="PanoramaSky" id=3]
+panorama = ExtResource( 1 )
+
+[sub_resource type="Environment" id=2]
+background_mode = 2
+background_sky = SubResource( 3 )
+background_color = Color( 0.858824, 0.858824, 0.858824, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
+ambient_light_energy = 0.5
 
 [node name="World" type="Spatial"]
 script = ExtResource( 3 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 2 )
 
 [node name="CameraRig" parent="." instance=ExtResource( 2 )]
 
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.418533, 0.908202, 0, -0.908202, 0.418533, 0, 3.53547, 0 )
 
-[node name="Sphere" parent="." instance=ExtResource( 1 )]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 8, 0, 0 )
+[node name="ShapeSpawner" parent="." instance=ExtResource( 4 )]
 
 [editable path="CameraRig"]
