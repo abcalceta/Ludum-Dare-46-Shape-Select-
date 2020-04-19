@@ -66,7 +66,7 @@ func getColorFromName(colorName):
 	if colorName == "red":
 		brightness = rand_range(0.5,1.0)
 	elif colorName == "orange":
-		brightness = rand_range(0.5,1.0)
+		brightness = rand_range(0.8,1.0)
 	elif colorName == "yellow":
 		brightness = rand_range(0.8,1.0)
 	elif colorName == "green":

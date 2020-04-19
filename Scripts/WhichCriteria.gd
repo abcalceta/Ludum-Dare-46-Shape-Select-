@@ -22,7 +22,7 @@ func setText(type, color, keepAlive):
 	$VBoxContainer/Shoot/VBoxContainer/HBoxContainer/Type/Type.text = type + " shapes"
 	$VBoxContainer/Shoot/VBoxContainer/HBoxContainer/Color/Color.text = color + " color"
 	#$PanelContainer/VBoxContainer/KeepAlivePanel/KeepAlive.text = "KEEP ("+type+" + "+color+") ALIVE"
-	$VBoxContainer/KeepAlivePanel/Color2/HBoxContainer/KeepAlive.text = type + " + " + color
+	$VBoxContainer/KeepAlivePanel/Color2/HBoxContainer/KeepAlive.text = color + " " + type
 	
 	setShape(type)
 	if color != curCol:
@@ -52,6 +52,5 @@ func setColor(color):
 	$VBoxContainer/KeepAlivePanel/Color2/HBoxContainer/TextureRect.set("modulate", colorObject)
 	pass
 
-func _on_WhichCriteria_visibility_changed():
-	pass
-	#$AnimationPlayer.play("goToCorner")
+func newCriteria():
+	$AnimationPlayer.play("goToCorner")

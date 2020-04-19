@@ -134,7 +134,7 @@ func _on_CameraRig_cameraHit():
 func _on_CriteriaTimer_timeout():
 	randomizeCriteria()
 	$newCriteria.play()
-	$CanvasLayer/WhichCriteria.hide()
+	$CanvasLayer/WhichCriteria.newCriteria()#hide()
 	$CriteriaTimer.wait_time -= 0.5
 	$CriteriaTimer.wait_time = clamp($CriteriaTimer.wait_time, 4.5, 10)
 	pass
@@ -155,6 +155,7 @@ func _on_Tutorial_startGame():
 	$CanvasLayer/WhichCriteria.hide()
 	$CriteriaTimer.start()
 	$ScoreTimer.start()
+	$CanvasLayer/WhichCriteria.newCriteria()#
 
 
 func _on_ScoreTimer_timeout():
