@@ -51,6 +51,7 @@ func _process(delta):
 	get_child(1).rotate_y(delta*ROTSPEED)
 	if toRemove and $AnimationPlayer.is_playing()==false:
 		$AnimationPlayer.play("disappear")
+		get_child(1).get_child(0).disabled = true
 	pass
 	
 	

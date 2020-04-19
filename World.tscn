@@ -13,7 +13,7 @@
 [ext_resource path="res://Assets/sfx/lose.wav" type="AudioStream" id=11]
 [ext_resource path="res://GameOverScreen.tscn" type="PackedScene" id=12]
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=1]
 resource_name = "fadeInMusic"
 length = 0.5
 tracks/0/type = "value"
@@ -29,12 +29,12 @@ tracks/0/keys = {
 "values": [ -80.0, 0.4 ]
 }
 
-[sub_resource type="PanoramaSky" id=3]
+[sub_resource type="PanoramaSky" id=2]
 panorama = ExtResource( 1 )
 
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id=3]
 background_mode = 2
-background_sky = SubResource( 3 )
+background_sky = SubResource( 2 )
 background_color = Color( 0.858824, 0.858824, 0.858824, 1 )
 ambient_light_color = Color( 1, 1, 1, 1 )
 ambient_light_energy = 0.8
@@ -54,7 +54,7 @@ pause_mode = 2
 script = ExtResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/fadeInMusic = SubResource( 4 )
+anims/fadeInMusic = SubResource( 1 )
 
 [node name="loseSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
@@ -96,7 +96,7 @@ visible = false
 visible = false
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource( 3 )
 
 [node name="CameraRig" parent="." instance=ExtResource( 2 )]
 
