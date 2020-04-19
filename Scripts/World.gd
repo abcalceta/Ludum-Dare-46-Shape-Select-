@@ -70,7 +70,7 @@ func _physics_process(delta):
 			$ShapeSpawner.shapes.remove(index)
 			object.toRemove = true
 			score += 150
-			
+			$CameraRig.shakeScreen()
 			
 		elif matchObject == "both":
 			object.get_node("death").play()			

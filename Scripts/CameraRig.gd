@@ -14,8 +14,14 @@ var velY = 0
 var velX = 0
 const SPEED = 0.5
 
+var shakeDistance = 0.5
 
 signal cameraHit
+
+
+var shakeAmount = Vector3(0,0,0)
+
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,11 +30,11 @@ func _ready():
 	pass # Replace with function body.
 
 func _physics_process(delta):
+	
 	if selectedObject:
 		showObjectDesc(selectedObject)
 	else:
 		hideObjectDesc()
-	
 	
 	mouseRayCastCheck()	
 	if Input.is_action_pressed("left"):
@@ -41,6 +47,19 @@ func _physics_process(delta):
 		velX -= 1*SPEED*delta
 		
 	moveCamera(delta)
+	
+	#Screen Shake
+	if $ScreenShakeTimer.time_left > 0:
+		$Outer/Inner/Camera.translation.x = lerp($Outer/Inner/Camera.translation.x, shakeAmount.x, delta)
+		$Outer/Inner/Camera.translation.y = lerp($Outer/Inner/Camera.translation.y, shakeAmount.y, delta)
+		$Outer/Inner/Camera.translation.z = lerp($Outer/Inner/Camera.translation.z, shakeAmount.z, delta)
+		if $ShakeTimer.time_left == 0:
+			$ShakeTimer.start()
+	else:
+		$Outer/Inner/Camera.translation.x = lerp($Outer/Inner/Camera.translation.x, 0, delta)
+		$Outer/Inner/Camera.translation.y = lerp($Outer/Inner/Camera.translation.y, 0, delta)
+		$Outer/Inner/Camera.translation.z = lerp($Outer/Inner/Camera.translation.z, 0, delta)
+	shakeDistance = clamp(shakeDistance- (0.1 * delta), 0.5, 1.5)
 	
 
 func raycastFromMousePosToObject():
@@ -99,3 +118,17 @@ func mouseClicks():
 func _on_Area_body_entered(body):
 	emit_signal("cameraHit")
 	#get_tree().paused = true
+
+
+func shakeScreen(amount=25):
+	$ScreenShakeTimer.wait_time = amount/100.0
+	$ScreenShakeTimer.start()
+	shake()
+	if $ScreenShakeTimer.time_left>0:
+		shakeDistance += 0.25
+
+func shake():
+	shakeAmount = Vector3(rand_range(-shakeDistance,shakeDistance),rand_range(-shakeDistance,shakeDistance),rand_range(-shakeDistance,shakeDistance))
+
+func _on_ShakeTimer_timeout():
+	shake()
