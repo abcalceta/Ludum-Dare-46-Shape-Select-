@@ -1,8 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Theme.tres" type="Theme" id=1]
 [ext_resource path="res://StyleBoxPanel.tres" type="StyleBox" id=2]
 [ext_resource path="res://Scripts/WhichCriteria.gd" type="Script" id=3]
+[ext_resource path="res://Assets/GUI/circle.png" type="Texture" id=4]
+[ext_resource path="res://Assets/GUI/colorSwatch.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.854902, 0.854902, 0.854902, 1 )
@@ -20,16 +22,16 @@ corner_radius_bottom_left = 3
 [sub_resource type="Animation" id=1]
 resource_name = "goToCorner"
 tracks/0/type = "value"
-tracks/0/path = NodePath("PanelContainer:rect_position")
+tracks/0/path = NodePath("VBoxContainer:rect_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
 "times": PoolRealArray( 0, 0.5, 1 ),
-"transitions": PoolRealArray( 1, 0.517633, 0.517633 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( 423, 267 ), Vector2( 423, 267 ), Vector2( 0, 439 ) ]
+"values": [ Vector2( 430, 190 ), Vector2( 430, 190 ), Vector2( 0, 310 ) ]
 }
 
 [node name="WhichCriteria" type="Control"]
@@ -41,27 +43,38 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_top = 1.0
 anchor_bottom = 1.0
-margin_left = 423.0
-margin_top = -333.0
-margin_right = 620.0
-margin_bottom = -231.0
-custom_styles/panel = ExtResource( 2 )
+margin_left = 430.0
+margin_top = -410.0
+margin_right = 594.0
+margin_bottom = -190.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+[node name="Shoot" type="PanelContainer" parent="VBoxContainer"]
+margin_right = 164.0
+margin_bottom = 132.0
+custom_styles/panel = ExtResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="VBoxContainer/Shoot"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 192.0
-margin_bottom = 97.0
+margin_right = 159.0
+margin_bottom = 127.0
 custom_constants/separation = 5
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="To Kill" type="Label" parent="PanelContainer/VBoxContainer"]
-margin_right = 187.0
+[node name="To Kill" type="Label" parent="VBoxContainer/Shoot/VBoxContainer"]
+margin_right = 154.0
 margin_bottom = 20.0
 text = "SHOOT:"
 align = 1
@@ -70,28 +83,47 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/Shoot/VBoxContainer"]
 margin_top = 25.0
-margin_right = 187.0
-margin_bottom = 45.0
+margin_right = 154.0
+margin_bottom = 122.0
 custom_constants/separation = 11
 alignment = 1
 
-[node name="Color" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 13.0
-margin_right = 87.0
-margin_bottom = 20.0
-text = "RED SHAPES"
-align = 1
-valign = 1
+[node name="Type" type="VBoxContainer" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer"]
+margin_left = 10.0
+margin_right = 60.0
+margin_bottom = 97.0
+alignment = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="or" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 98.0
-margin_right = 109.0
-margin_bottom = 20.0
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer/Type"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+
+[node name="Type" type="Label" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer/Type"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 97.0
+text = "RED SHAPES"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="or" type="Label" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer"]
+margin_left = 71.0
+margin_top = 38.0
+margin_right = 82.0
+margin_bottom = 58.0
 text = "or"
 align = 1
 valign = 1
@@ -99,35 +131,108 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Type" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 120.0
-margin_right = 174.0
-margin_bottom = 20.0
+[node name="Color" type="VBoxContainer" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer"]
+margin_left = 93.0
+margin_right = 143.0
+margin_bottom = 97.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer/Color"]
+margin_right = 50.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 5 )
+expand = true
+stretch_mode = 5
+
+[node name="Color" type="Label" parent="VBoxContainer/Shoot/VBoxContainer/HBoxContainer/Color"]
+margin_top = 54.0
+margin_right = 50.0
+margin_bottom = 97.0
 text = "SPHERES"
 align = 1
 valign = 1
+autowrap = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="KeepAlivePanel" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 50.0
-margin_right = 187.0
-margin_bottom = 80.0
+[node name="KeepAlivePanel" type="PanelContainer" parent="VBoxContainer"]
+margin_top = 136.0
+margin_right = 164.0
+margin_bottom = 229.0
 custom_styles/panel = SubResource( 2 )
 __meta__ = {
+"_edit_group_": true,
 "_edit_use_anchors_": false
 }
 
-[node name="KeepAlive" type="Label" parent="PanelContainer/VBoxContainer/KeepAlivePanel"]
+[node name="Color2" type="VBoxContainer" parent="VBoxContainer/KeepAlivePanel"]
 margin_left = 5.0
 margin_top = 5.0
-margin_right = 182.0
-margin_bottom = 25.0
+margin_right = 159.0
+margin_bottom = 88.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="keep alive" type="Label" parent="VBoxContainer/KeepAlivePanel/Color2"]
+margin_right = 154.0
+margin_bottom = 20.0
 custom_colors/font_color = Color( 0, 0, 0, 1 )
-text = "RED SPHERES"
+text = "KEEP ALIVE"
 align = 1
 valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/KeepAlivePanel/Color2"]
+margin_top = 24.0
+margin_right = 154.0
+margin_bottom = 74.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="VBoxContainer/KeepAlivePanel/Color2/HBoxContainer"]
+margin_right = 10.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 10, 0 )
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/KeepAlivePanel/Color2/HBoxContainer"]
+margin_left = 14.0
+margin_right = 64.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 50, 50 )
+texture = ExtResource( 4 )
+expand = true
+stretch_mode = 5
+
+[node name="KeepAlive" type="Label" parent="VBoxContainer/KeepAlivePanel/Color2/HBoxContainer"]
+margin_left = 68.0
+margin_top = 3.0
+margin_right = 148.0
+margin_bottom = 46.0
+rect_min_size = Vector2( 80, 0 )
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+text = "DO NOT SHOOT"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Control" type="Control" parent="VBoxContainer/KeepAlivePanel/Color2"]
+margin_top = 78.0
+margin_right = 154.0
+margin_bottom = 83.0
+rect_min_size = Vector2( 0, 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }

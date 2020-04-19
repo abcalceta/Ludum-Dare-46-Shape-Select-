@@ -41,7 +41,7 @@ func _process(delta):
 	elif gameStart and !gameOver:
 		muffleSound(false)		
 		get_tree().paused = false
-		$CanvasLayer/WhichCriteria.setText(criteriaColor, criteriaType, criteriaColor+" and "+criteriaType)
+		$CanvasLayer/WhichCriteria.setText(criteriaType, criteriaColor, null)
 		$CanvasLayer/WhichCriteria.show()
 		$CanvasLayer/ScoreDisplay.show()
 		$CanvasLayer/ScoreDisplay/PanelContainer/Label.text = "SCORE: "+str(score)
