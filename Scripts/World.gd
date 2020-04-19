@@ -25,6 +25,8 @@ func _ready():
 	$WorldEnvironment.environment.set("adjustment_saturation", 0.01)
 	$CanvasLayer/Tutorial.show()
 	$CanvasLayer/WhichCriteria.hide()
+	$CanvasLayer/ScoreDisplay.hide()
+	$CanvasLayer/GameOverScreen.hide()	
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	set_physics_process(1)
 	pass # Replace with function body.
@@ -41,18 +43,19 @@ func _process(delta):
 		get_tree().paused = false
 		$CanvasLayer/WhichCriteria.setText(criteriaColor, criteriaType, criteriaColor+" and "+criteriaType)
 		$CanvasLayer/WhichCriteria.show()
-		
+		$CanvasLayer/ScoreDisplay.show()
 		$CanvasLayer/ScoreDisplay/PanelContainer/Label.text = "SCORE: "+str(score)
 		
 		
 		
-	
+	#DEBUG 
 	if Input.is_action_just_pressed("quit"):
 		get_tree().quit()
 	if Input.is_action_just_pressed("restart"):
 		get_tree().reload_current_scene()
 		get_tree().paused = false
 	if gameOver:
+		set_physics_process(0)
 		gameOverEffects(delta)
 		
 func _physics_process(delta):
@@ -93,6 +96,11 @@ func checkIfMatch(object):
 		return "noMatch"
 
 func gameOverEffects(delta):
+	$CanvasLayer/WhichCriteria.hide()
+	$CanvasLayer/ScoreDisplay.hide()
+	
+	$CanvasLayer/GameOverScreen.setScore(score)
+	$CanvasLayer/GameOverScreen.show()
 	if !$loseSound.playing and losePlayed == false:
 		$loseSound.play()
 		losePlayed = true
@@ -151,3 +159,8 @@ func _on_Tutorial_startGame():
 
 func _on_ScoreTimer_timeout():
 	score += 1
+
+
+func _on_GameOverScreen_restartGame():
+	get_tree().reload_current_scene()
+	get_tree().paused = false

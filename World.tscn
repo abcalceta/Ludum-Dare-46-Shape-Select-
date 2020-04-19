@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Assets/hdr.hdr" type="Texture" id=1]
 [ext_resource path="res://CameraRig.tscn" type="PackedScene" id=2]
@@ -11,9 +11,11 @@
 [ext_resource path="res://ScoreDisplay.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Assets/Music/Ludum Dare 46.ogg" type="AudioStream" id=10]
 [ext_resource path="res://Assets/sfx/lose.wav" type="AudioStream" id=11]
+[ext_resource path="res://GameOverScreen.tscn" type="PackedScene" id=12]
 
 [sub_resource type="Animation" id=4]
 resource_name = "fadeInMusic"
+length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("bgMusic:volume_db")
 tracks/0/interp = 1
@@ -21,7 +23,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
+"times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
 "values": [ -80.0, 0.4 ]
@@ -43,6 +45,8 @@ dof_blur_far_transition = 10.0
 dof_blur_far_amount = 0.05
 dof_blur_far_quality = 2
 glow_enabled = true
+glow_intensity = 1.46
+glow_bloom = 0.26
 adjustment_enabled = true
 
 [node name="World" type="Spatial"]
@@ -67,6 +71,7 @@ stream = ExtResource( 8 )
 bus = "MUSIC"
 
 [node name="ScoreTimer" type="Timer" parent="."]
+pause_mode = 1
 wait_time = 0.1
 
 [node name="CriteriaTimer" type="Timer" parent="."]
@@ -86,6 +91,9 @@ pause_mode = 2
 
 [node name="Tutorial" parent="CanvasLayer" instance=ExtResource( 7 )]
 
+[node name="GameOverScreen" parent="CanvasLayer" instance=ExtResource( 12 )]
+visible = false
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
 
@@ -99,6 +107,7 @@ pause_mode = 1
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
 [connection signal="timeout" from="CriteriaTimer" to="." method="_on_CriteriaTimer_timeout"]
 [connection signal="startGame" from="CanvasLayer/Tutorial" to="." method="_on_Tutorial_startGame"]
+[connection signal="restartGame" from="CanvasLayer/GameOverScreen" to="." method="_on_GameOverScreen_restartGame"]
 [connection signal="cameraHit" from="CameraRig" to="." method="_on_CameraRig_cameraHit"]
 
 [editable path="CameraRig"]
