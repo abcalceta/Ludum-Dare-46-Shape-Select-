@@ -14,6 +14,9 @@ var velY = 0
 var velX = 0
 const SPEED = 0.5
 
+
+signal cameraHit
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	hideObjectDesc()
@@ -44,6 +47,7 @@ func raycastFromMousePosToObject():
 	mousePos = get_viewport().get_mouse_position()
 	$MouseRayCast.global_transform.origin = camera.project_ray_origin(mousePos)
 	$MouseRayCast.cast_to = camera.project_ray_normal(mousePos) * RAYCAST_DISTANCE
+	
 	if $MouseRayCast.is_colliding():
 		var object = $MouseRayCast.get_collider()
 		return object
@@ -90,3 +94,8 @@ func mouseClicks():
 	if Input.is_action_just_released("click"):
 		clicked = false
 		selectedObject = null
+
+
+func _on_Area_body_entered(body):
+	emit_signal("cameraHit")
+	#get_tree().paused = true

@@ -16,7 +16,8 @@ func _ready():
 #	pass
 
 func setLabel(staticBodyObject):
-	var label = $PanelContainer/Label
-	var object = staticBodyObject.get_parent()
-	label.text = object.colorName + " "
-	label.text += object.type
+	if staticBodyObject != null:
+		var label = $PanelContainer/Label
+		var object = staticBodyObject.get_parent()
+		label.text = object.colorName + " "
+		label.text += object.type

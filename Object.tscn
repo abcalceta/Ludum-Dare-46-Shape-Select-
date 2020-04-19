@@ -1,8 +1,91 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scripts/Object.gd" type="Script" id=1]
+[ext_resource path="res://Assets/sfx/shootWrong.wav" type="AudioStream" id=2]
+[ext_resource path="res://Assets/sfx/shootRight.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/sfx/shootDeath.wav" type="AudioStream" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "appear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0, 0, 0 ), Vector3( 1.2, 1.2, 1.2 ), Vector3( 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "disappear"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 1, 1, 1 ), Vector3( 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StaticBody:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
 
 [node name="Object" type="Spatial"]
+transform = Transform( 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 )
 script = ExtResource( 1 )
 
 [node name="StaticBody" type="StaticBody" parent="."]
+visible = false
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/appear = SubResource( 1 )
+anims/disappear = SubResource( 2 )
+
+[node name="correct" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 3 )
+unit_db = 4.0
+max_db = 5.0
+
+[node name="wrong" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 2 )
+unit_db = 4.0
+max_db = 5.0
+
+[node name="death" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource( 4 )
+unit_db = 4.0
+max_db = 5.0
+[connection signal="ready" from="." to="." method="_on_Object_ready"]
+[connection signal="tree_exited" from="." to="." method="_on_Object_tree_exited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

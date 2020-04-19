@@ -21,7 +21,10 @@ var distance = 0
 
 var ROTSPEED = 5
 
+var toRemove = false
 
+var lunge = false
+var lungeAccel = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
@@ -45,7 +48,9 @@ func _ready():
 func _process(delta):
 	
 	get_child(0).rotate_y(delta*ROTSPEED)
-	
+	get_child(1).rotate_y(delta*ROTSPEED)
+	if toRemove and $AnimationPlayer.is_playing()==false:
+		$AnimationPlayer.play("disappear")
 	pass
 	
 	
@@ -61,8 +66,31 @@ func moveForward(delta):
 	
 	translate(direction*delta*forwardVel)
 	forwardVel += speed*delta
-	forwardVel = clamp(forwardVel, MIN_SPEED, MAX_SPEED*distance*0.05)
+	
+	
+	var lungeSpeed = MAX_SPEED*distance*0.05
+	if lunge:
+		lungeAccel += speed
+		forwardVel += delta*lungeAccel
+		lungeSpeed = MAX_SPEED*distance*0.5
+	else:
+		lungeAccel = 0
+		forwardVel += speed*delta
+		lungeSpeed = lerp(lungeSpeed, MAX_SPEED*distance*0.05, delta)
+	forwardVel = clamp(forwardVel, MIN_SPEED, lungeSpeed)
 	
 func jerkBack():
 	forwardVel += jerkBackSpeed
+	lunge = false
 	return distance-(jerkBackSpeed/2)
+
+func lungeForward(trueFalse):
+	lunge = trueFalse
+
+func _on_Object_ready():
+	$AnimationPlayer.play("appear")
+
+
+func _on_AnimationPlayer_animation_finished(anim_name):
+	if anim_name == "disappear":
+		queue_free()

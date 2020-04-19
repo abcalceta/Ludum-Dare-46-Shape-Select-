@@ -39,6 +39,11 @@ func jerkBackAll():
 		if maxDistance < temp:
 			maxDistance = temp
 
+func lungeForward():
+	$lungeTimer.start()
+	for shape in shapes:
+		var temp = shape.lungeForward(true)
+
 func spawnShape(dist):
 	var shapeNames = ["res://ItemScenes/Sphere.tscn",
 					"res://ItemScenes/Triangle.tscn",
@@ -50,7 +55,20 @@ func spawnShape(dist):
 	add_child(s)
 	shapes.append(s)
 	pass
-
+	
+	
+func spawnSpecificShape(typeNum, color, dist):
+	var shapeNames = ["res://ItemScenes/Sphere.tscn",
+					"res://ItemScenes/Triangle.tscn",
+					"res://ItemScenes/Cube.tscn"]
+	var shape = load(shapeNames[typeNum])
+	shape.colorName = color
+	shape.colorColor = globals.getColorFromName(shape.colorName)
+	var s = shape.instance()
+	s = placeShape(s, dist)
+	add_child(s)
+	shapes.append(s)
+	
 func placeShape(shape, distanceFromCenter):
 	var randNum = rand_range(PI*-2, PI*2)
 	var y = rand_range(-1, 1)
@@ -58,17 +76,19 @@ func placeShape(shape, distanceFromCenter):
 	var x = r * sin(randNum)
 	var z = r * cos(randNum)
 	
-	var step = 5
+	var step = 7
 	
 	var temp = distanceFromCenter*Vector3(x, y, z)
 	
 	temp = Vector3(stepify(temp.x, step), stepify(temp.y, step), stepify(temp.z, step))
-	
+	var count = 0
 	while true:
-		if listOfPos.find(temp)==-1:
+		if count>=5 or listOfPos.find(temp)==-1:
+			listOfPos.append(temp)
 			shape.translation = distanceFromCenter*Vector3(x, y, z)	
 			break
 		else:
+			count += 1
 			print("repeater")
 			randNum = rand_range(PI*-2, PI*2)
 			y = rand_range(-1, 1)
@@ -76,7 +96,7 @@ func placeShape(shape, distanceFromCenter):
 			x = r * sin(randNum)
 			z = r * cos(randNum)
 			temp = distanceFromCenter*Vector3(x, y, z)
-			temp = Vector3(stepify(temp.x, 2), stepify(temp.y, 2), stepify(temp.z, 2))
+			temp = Vector3(stepify(temp.x, step), stepify(temp.y, step), stepify(temp.z, step))
 			
 	
 	return shape
@@ -87,9 +107,14 @@ func placeShape(shape, distanceFromCenter):
 	
 	
 func _on_spawnTimer_timeout():
-	for x in range(5):
+	listOfPos = []
+	for x in range(1):
 		spawnShape(maxDistance)
 
 func _on_rampUpSpeed_timeout():
 	for shape in shapes:
 		shape.MAX_SPEED += 0.01
+
+func _on_lungeTimer_timeout():
+	for shape in shapes:
+		var temp = shape.lungeForward(false)

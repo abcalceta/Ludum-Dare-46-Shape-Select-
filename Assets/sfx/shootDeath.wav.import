@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/shootDeath.wav-9e325f3f1e0f5d5f2a241f89f0734631.sample"
+
+[deps]
+
+source_file="res://Assets/sfx/shootDeath.wav"
+dest_files=[ "res://.import/shootDeath.wav-9e325f3f1e0f5d5f2a241f89f0734631.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0
