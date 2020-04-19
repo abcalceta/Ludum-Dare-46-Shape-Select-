@@ -8,6 +8,7 @@
 [sub_resource type="Animation" id=4]
 resource_name = "cycleColors"
 length = 3.0
+loop = true
 tracks/0/type = "value"
 tracks/0/path = NodePath("VBoxContainer/Title:custom_colors/font_color")
 tracks/0/interp = 1
@@ -20,16 +21,28 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Color( 1, 0.756863, 0.756863, 1 ), Color( 0.988235, 1, 0.756863, 1 ), Color( 0.756863, 1, 0.768627, 1 ), Color( 0.756863, 0.996078, 1, 1 ), Color( 0.756863, 0.776471, 1, 1 ), Color( 0.996078, 0.756863, 1, 1 ), Color( 1, 0.756863, 0.756863, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("ColorRect:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0.117647, 0, 0, 0.623529 ), Color( 0.105882, 0.117647, 0, 0.623529 ), Color( 0, 0.164706, 0.0313726, 0.623529 ), Color( 0, 0.207843, 0.34902, 0.623529 ), Color( 0.133333, 0, 0.34902, 0.623529 ), Color( 0.137255, 0, 0.141176, 0.623529 ), Color( 0.117647, 0, 0, 0.623529 ) ]
+}
 
-[sub_resource type="DynamicFont" id=3]
-size = 64
-outline_color = Color( 0.14902, 0.14902, 0.14902, 0.411765 )
+[sub_resource type="DynamicFont" id=2]
+size = 30
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
 
-[sub_resource type="DynamicFont" id=2]
-size = 30
+[sub_resource type="DynamicFont" id=3]
+size = 64
+outline_color = Color( 0.14902, 0.14902, 0.14902, 0.411765 )
 use_mipmaps = true
 use_filter = true
 font_data = ExtResource( 3 )
@@ -82,7 +95,7 @@ margin_left = -33.0
 margin_top = -21.0
 margin_right = 1061.0
 margin_bottom = 643.0
-color = Color( 0, 0, 0, 0.623529 )
+color = Color( 0.117647, 0, 0, 0.623529 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -90,6 +103,22 @@ __meta__ = {
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "cycleColors"
 anims/cycleColors = SubResource( 4 )
+
+[node name="Label2" type="Label" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_left = 10.0
+margin_top = -87.0
+margin_right = 238.0
+margin_bottom = -10.0
+theme = ExtResource( 1 )
+custom_fonts/font = SubResource( 2 )
+text = "Made in Godot 3.2.1
+for Ludum Dare 46"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 anchor_left = 0.5

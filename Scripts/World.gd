@@ -79,6 +79,7 @@ func _physics_process(delta):
 			score -= 200
 			
 		else:
+			$CameraRig.shakeScreen(10)			
 			object.get_node("wrong").play()
 			score -= 100
 			
