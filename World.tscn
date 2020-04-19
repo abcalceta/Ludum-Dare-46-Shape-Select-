@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Assets/hdr.hdr" type="Texture" id=1]
 [ext_resource path="res://CameraRig.tscn" type="PackedScene" id=2]
@@ -6,6 +6,10 @@
 [ext_resource path="res://ShapeSpawner.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Debug.tscn" type="PackedScene" id=5]
 [ext_resource path="res://WhichCriteria.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Tutorial.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/sfx/newCriteria.wav" type="AudioStream" id=8]
+[ext_resource path="res://ScoreDisplay.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Assets/Music/Ludum Dare 46.ogg" type="AudioStream" id=10]
 
 [sub_resource type="PanoramaSky" id=3]
 panorama = ExtResource( 1 )
@@ -29,12 +33,33 @@ adjustment_enabled = true
 pause_mode = 2
 script = ExtResource( 3 )
 
+[node name="bgMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = 0.4
+autoplay = true
+
+[node name="newCriteria" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+
+[node name="ScoreTimer" type="Timer" parent="."]
+wait_time = 0.1
+
+[node name="CriteriaTimer" type="Timer" parent="."]
+pause_mode = 1
+process_mode = 0
+wait_time = 10.0
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
+[node name="ScoreDisplay" parent="CanvasLayer" instance=ExtResource( 9 )]
+
 [node name="Debug" parent="CanvasLayer" instance=ExtResource( 5 )]
+visible = false
 
 [node name="WhichCriteria" parent="CanvasLayer" instance=ExtResource( 6 )]
 pause_mode = 2
+
+[node name="Tutorial" parent="CanvasLayer" instance=ExtResource( 7 )]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 2 )
@@ -46,7 +71,9 @@ transform = Transform( 1, 0, 0, 0, 0.418533, 0.908202, 0, -0.908202, 0.418533, 0
 
 [node name="ShapeSpawner" parent="." instance=ExtResource( 4 )]
 pause_mode = 1
-[connection signal="startGame" from="CanvasLayer/WhichCriteria" to="." method="_on_WhichCriteria_startGame"]
+[connection signal="timeout" from="ScoreTimer" to="." method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="CriteriaTimer" to="." method="_on_CriteriaTimer_timeout"]
+[connection signal="startGame" from="CanvasLayer/Tutorial" to="." method="_on_Tutorial_startGame"]
 [connection signal="cameraHit" from="CameraRig" to="." method="_on_CameraRig_cameraHit"]
 
 [editable path="CameraRig"]

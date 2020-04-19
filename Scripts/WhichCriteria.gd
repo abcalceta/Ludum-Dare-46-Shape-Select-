@@ -17,5 +17,13 @@ func _ready():
 #	pass
 
 
-func _on_Button_pressed():
-	emit_signal("startGame")
+
+func setText(type, color, keepAlive):
+	$PanelContainer/VBoxContainer/HBoxContainer/Type.text = type + " shapes"
+	$PanelContainer/VBoxContainer/HBoxContainer/Color.text = color + " shapes"
+	$PanelContainer/VBoxContainer/KeepAlivePanel/KeepAlive.text = "KEEP ("+type+" + "+color+") ALIVE"
+	
+
+
+func _on_WhichCriteria_visibility_changed():
+	$AnimationPlayer.play("goToCorner")

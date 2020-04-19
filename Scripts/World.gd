@@ -5,6 +5,8 @@ extends Spatial
 # var a = 2
 # var b = "text"
 
+var score = 0
+
 var criteriaColor = "red"
 var criteriaType = "sphere"
 var gameStart = false
@@ -14,7 +16,10 @@ var ROTSPEED = 0.25
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	randomize()
 	$WorldEnvironment.environment.set("adjustment_saturation", 0.01)
+	$CanvasLayer/Tutorial.show()
+	$CanvasLayer/WhichCriteria.hide()
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	set_physics_process(1)
 	pass # Replace with function body.
@@ -22,10 +27,17 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	
 	if !gameStart:
 		get_tree().paused = true
 	elif gameStart and !gameOver:
 		get_tree().paused = false
+		$CanvasLayer/WhichCriteria.setText(criteriaColor, criteriaType, criteriaColor+" and "+criteriaType)
+		$CanvasLayer/WhichCriteria.show()
+		
+		$CanvasLayer/ScoreDisplay/Label.text = "SCORE: "+str(score)
+		
+		
 		
 	
 	if Input.is_action_just_pressed("quit"):
@@ -34,26 +46,34 @@ func _process(delta):
 		get_tree().reload_current_scene()
 		get_tree().paused = false
 	if gameOver:
-		
 		gameOverEffects(delta)
 		
 func _physics_process(delta):
 	if $CameraRig.selectedObject !=null and Input.is_action_just_pressed("click"):
 		var object = $CameraRig.selectedObject.get_parent()
 		var matchObject = checkIfMatch(object)
+		
 		if matchObject=="good":
 			object.get_node("correct").play()
 			$ShapeSpawner.jerkBackAll()
 			var index = $ShapeSpawner.shapes.find(object)
 			$ShapeSpawner.shapes.remove(index)
 			object.toRemove = true
+			score += 150
+			
+			
 		elif matchObject == "both":
 			object.get_node("death").play()			
 			$ShapeSpawner.lungeForward()
 			#$ShapeSpawner.remove_child(object)
+			score -= 200
+			
 		else:
 			object.get_node("wrong").play()
+			score -= 100
 			
+		if score<0:
+			score=0
 			
 func checkIfMatch(object):
 	var A = criteriaColor == object.colorName
@@ -78,7 +98,31 @@ func _on_CameraRig_cameraHit():
 	pass # Replace with function body.
 
 
-func _on_WhichCriteria_startGame():
+func _on_CriteriaTimer_timeout():
+	randomizeCriteria()
+	$newCriteria.play()
+	$CanvasLayer/WhichCriteria.hide()
+	$CriteriaTimer.wait_time -= 0.5
+	$CriteriaTimer.wait_time = clamp($CriteriaTimer.wait_time, 4.5, 10)
+	pass
+	
+func randomizeCriteria():
+	randomize()
+	var shapeTypes = ["sphere", "triangle", "cube"]
+	criteriaType = shapeTypes[randi()%3]
+	criteriaColor = globals.getRandomColorName()
+
+
+func _on_Tutorial_startGame():
 	gameStart = true
 	$WorldEnvironment.environment.set("adjustment_saturation", 1)
+	$CanvasLayer/Tutorial.hide()
+	randomizeCriteria()
+	$newCriteria.play()
 	$CanvasLayer/WhichCriteria.hide()
+	$CriteriaTimer.start()
+	$ScoreTimer.start()
+
+
+func _on_ScoreTimer_timeout():
+	score += 1

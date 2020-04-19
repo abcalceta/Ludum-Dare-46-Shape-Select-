@@ -1,8 +1,22 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Assets/Theme.tres" type="Theme" id=1]
-[ext_resource path="res://StyleBoxPanel.tres" type="StyleBox" id=2]
 [ext_resource path="res://Scripts/WhichCriteria.gd" type="Script" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "goToCorner"
+tracks/0/type = "value"
+tracks/0/path = NodePath("PanelContainer:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 0.517633, 0.517633 ),
+"update": 0,
+"values": [ Vector2( 423, 267 ), Vector2( 423, 267 ), Vector2( 0, 439 ) ]
+}
 
 [node name="WhichCriteria" type="Control"]
 anchor_right = 1.0
@@ -14,10 +28,12 @@ __meta__ = {
 }
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
 margin_left = 423.0
-margin_top = 267.0
+margin_top = -333.0
 margin_right = 620.0
-margin_bottom = 428.0
+margin_bottom = -231.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -26,53 +42,53 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 190.0
-margin_bottom = 154.0
+margin_bottom = 95.0
 custom_constants/separation = 5
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+[node name="To Kill" type="Label" parent="PanelContainer/VBoxContainer"]
 margin_right = 183.0
-margin_bottom = 53.0
-custom_constants/separation = 11
-alignment = 1
-
-[node name="TypePanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 12.0
-margin_right = 76.0
-margin_bottom = 53.0
-custom_styles/panel = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Type" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/TypePanel"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 59.0
-margin_bottom = 48.0
-text = "KILL: 
-SPHERES"
+margin_bottom = 20.0
+text = "SHOOT:"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorPanel" type="PanelContainer" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-margin_left = 87.0
-margin_right = 171.0
-margin_bottom = 53.0
-custom_styles/panel = ExtResource( 2 )
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+margin_top = 25.0
+margin_right = 183.0
+margin_bottom = 45.0
+custom_constants/separation = 11
+alignment = 1
+
+[node name="Color" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 11.0
+margin_right = 85.0
+margin_bottom = 20.0
+text = "RED SHAPES"
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Color" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer/ColorPanel"]
-margin_left = 5.0
-margin_top = 5.0
-margin_right = 79.0
-margin_bottom = 48.0
-text = "KILL: 
-RED SHAPES"
+[node name="or" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 96.0
+margin_right = 107.0
+margin_bottom = 20.0
+text = "or"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Type" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 172.0
+margin_bottom = 20.0
+text = "SPHERES"
 align = 1
 valign = 1
 __meta__ = {
@@ -80,9 +96,9 @@ __meta__ = {
 }
 
 [node name="KeepAlivePanel" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
-margin_top = 58.0
+margin_top = 50.0
 margin_right = 183.0
-margin_bottom = 115.0
+margin_bottom = 84.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -91,21 +107,14 @@ __meta__ = {
 margin_left = 7.0
 margin_top = 7.0
 margin_right = 176.0
-margin_bottom = 50.0
-text = "BUT MUST KEEP ALIVE:
-RED SPHERES"
+margin_bottom = 27.0
+text = "RED SPHERES"
 align = 1
 valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="PanelContainer/VBoxContainer"]
-margin_top = 120.0
-margin_right = 183.0
-margin_bottom = 146.0
-text = "START"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-[connection signal="pressed" from="PanelContainer/VBoxContainer/Button" to="." method="_on_Button_pressed"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/goToCorner = SubResource( 1 )
+[connection signal="visibility_changed" from="." to="." method="_on_WhichCriteria_visibility_changed"]
