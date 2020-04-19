@@ -74,18 +74,23 @@ anims/disappear = SubResource( 2 )
 
 [node name="correct" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 3 )
-unit_db = 4.0
-max_db = 5.0
+unit_db = 5.0
+unit_size = 5.0
+max_db = 6.0
+bus = "SFX"
 
 [node name="wrong" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 2 )
-unit_db = 4.0
-max_db = 5.0
+unit_db = 5.0
+unit_size = 5.0
+max_db = 6.0
+bus = "SFX"
 
 [node name="death" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource( 4 )
-unit_db = 4.0
-max_db = 5.0
+unit_db = 5.0
+unit_size = 5.0
+max_db = 6.0
+bus = "SFX"
 [connection signal="ready" from="." to="." method="_on_Object_ready"]
-[connection signal="tree_exited" from="." to="." method="_on_Object_tree_exited"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]

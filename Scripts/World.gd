@@ -11,12 +11,17 @@ var criteriaColor = "red"
 var criteriaType = "sphere"
 var gameStart = false
 
+
 var gameOver = false
+var losePlayed = false
 var ROTSPEED = 0.25
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	$AnimationPlayer.play("fadeInMusic")
 	randomize()
+	muffleSound(true)
 	$WorldEnvironment.environment.set("adjustment_saturation", 0.01)
 	$CanvasLayer/Tutorial.show()
 	$CanvasLayer/WhichCriteria.hide()
@@ -29,13 +34,15 @@ func _ready():
 func _process(delta):
 	
 	if !gameStart:
+		muffleSound(true)		
 		get_tree().paused = true
 	elif gameStart and !gameOver:
+		muffleSound(false)		
 		get_tree().paused = false
 		$CanvasLayer/WhichCriteria.setText(criteriaColor, criteriaType, criteriaColor+" and "+criteriaType)
 		$CanvasLayer/WhichCriteria.show()
 		
-		$CanvasLayer/ScoreDisplay/Label.text = "SCORE: "+str(score)
+		$CanvasLayer/ScoreDisplay/PanelContainer/Label.text = "SCORE: "+str(score)
 		
 		
 		
@@ -86,10 +93,28 @@ func checkIfMatch(object):
 		return "noMatch"
 
 func gameOverEffects(delta):
+	if !$loseSound.playing and losePlayed == false:
+		$loseSound.play()
+		losePlayed = true
+		muffleSound(true)
 	$ShapeSpawner.rotate_y(ROTSPEED*delta)
 	var lerpedSat = lerp($WorldEnvironment.environment.get("adjustment_saturation"), 0.01, 2*delta)
 	$WorldEnvironment.environment.set("adjustment_saturation", lerpedSat)
 	
+
+func muffleSound(which):
+	if which:
+		var bus = AudioServer.get_bus_effect(2, 0)
+		bus.wet = 0.9
+		bus.dry = 0.05
+		var bus2 = AudioServer.get_bus_effect(2, 1)
+		bus2.volume_db = -15
+	else:
+		var bus = AudioServer.get_bus_effect(2, 0)
+		bus.wet = 0.05
+		bus.dry = 1.0
+		var bus2 = AudioServer.get_bus_effect(2, 1)
+		bus2.volume_db = 0
 
 func _on_CameraRig_cameraHit():
 	get_tree().paused = true
